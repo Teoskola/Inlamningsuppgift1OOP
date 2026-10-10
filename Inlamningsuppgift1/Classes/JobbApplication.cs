@@ -21,7 +21,7 @@ namespace Inlamningsuppgift1.Classes
             Offer,
             Rejected
         }
-        
+        public ApplicationStatus status { get; set; }
         public DateTime ApplicationDate { get; set; }
         
         public DateTime? ResponseDate { get; set; }
@@ -37,7 +37,7 @@ namespace Inlamningsuppgift1.Classes
         //Returnerar en kort sammanfattning av ansökan.
         public string GetSummary()
         {
-            return $"Company: {CompanyName}, Position: {PositionTitle}, Status: {ApplicationStatus}, Applied: {ApplicationDate.ToShortDateString()}, Response: {(ResponseDate.HasValue ? ResponseDate.Value.ToShortDateString() : "N/A")}, Salary Expectation: {SalaryExpectation}";
+            return $"Company: {CompanyName}, Position: {PositionTitle}, Status: {status}, Applied: {ApplicationDate.ToShortDateString()}, Response: {(ResponseDate.HasValue ? ResponseDate.Value.ToShortDateString() : "N/A")}, Salary Expectation: {SalaryExpectation}";
         }
 
 
