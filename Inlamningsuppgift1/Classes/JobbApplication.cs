@@ -37,7 +37,7 @@ namespace Inlamningsuppgift1.Classes
         //Returnerar en kort sammanfattning av ansökan.
         public string GetSummary()
         {
-            return $"Company: {CompanyName}, Position: {PositionTitle}, Status: {status}, Applied: {ApplicationDate.ToShortDateString()}, Response: {(ResponseDate.HasValue ? ResponseDate.Value.ToShortDateString() : "N/A")}, Salary Expectation: {SalaryExpectation}";
+            return $"Företag: {CompanyName}, Position: {PositionTitle}, Status: {status}, AnsökningsDatum: {ApplicationDate.ToShortDateString()}, Respons: {(ResponseDate.HasValue ? ResponseDate.Value.ToShortDateString() : "N/A")}, Förväntad lön: {SalaryExpectation}";
         }
 
 

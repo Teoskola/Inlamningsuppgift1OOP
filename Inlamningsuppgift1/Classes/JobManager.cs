@@ -6,7 +6,7 @@ namespace Inlamningsuppgift1.Classes
 {
     public class JobManager
     {
-        //ATTRIBUTER
+        
 
         // Applications | List<JobApplication> - Samling av alla ansökningar
         List<JobbApplication> Applications { get; set; } = new List<JobbApplication>();
@@ -15,7 +15,17 @@ namespace Inlamningsuppgift1.Classes
         //Lägger till en ny ansökan
         public void AddJob(JobbApplication application)
         {
+            Console.WriteLine("Till vilket företag ansöker du?");
+            application.CompanyName = Console.ReadLine();
+            Console.WriteLine("Till vilken position ansöker du?");
+            application.PositionTitle = Console.ReadLine();
+            application.ApplicationDate = DateTime.Now;
+            Console.WriteLine("Hur mycket lön förväntar du dig skriv en siffra:");
+            application.SalaryExpectation = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Din ansökan har tagits emot.");
             Applications.Add(application);
+
+
         }
         //Ändrar status på en befintlig ansökan
         public void UpdateStatus(JobbApplication application, JobbApplication.ApplicationStatus newStatus)
@@ -25,10 +35,14 @@ namespace Inlamningsuppgift1.Classes
         //Visar alla ansökningar
         public void ShowAll()
         {
-            foreach (var application in Applications)
-            {
-                Console.WriteLine(application.GetSummary());
-            }
+            if (Applications.Count > 0)
+                foreach (var application in Applications)
+                {
+                    Console.WriteLine(application.GetSummary());
+                }
+            else
+            { Console.WriteLine("Det finns inga ansökningar"); }
+
         }
         ////Filtrerar med LINQ efter status(VG del)
         //public void ShowByStatus(JobbApplication.ApplicationStatus status)
