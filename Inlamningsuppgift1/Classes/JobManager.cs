@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Inlamningsuppgift1.Classes
 {
@@ -10,6 +11,8 @@ namespace Inlamningsuppgift1.Classes
 
         // Applications | List<JobApplication> - Samling av alla ansökningar
         public List<JobbApplication> Applications { get; set; } = new List<JobbApplication>();
+        
+        
 
         //METODER
         //Lägger till en ny ansökan
@@ -23,14 +26,52 @@ namespace Inlamningsuppgift1.Classes
             Console.WriteLine("Hur mycket lön förväntar du dig skriv en siffra:");
             application.SalaryExpectation = int.Parse(Console.ReadLine());
             Console.WriteLine($"Din ansökan har tagits emot.");
+            
             Applications.Add(application);
 
 
         }
         //Ändrar status på en befintlig ansökan
-        public void UpdateStatus(JobbApplication application, JobbApplication.ApplicationStatus newStatus)
+        public void UpdateStatus()
         {
-            application.status = newStatus;
+            if (Applications.Count == 0)
+            {
+                Console.WriteLine("Det finns inga ansökningar att uppdatera.");
+                return;
+            }
+            int count = 0;
+            foreach (var application in Applications)
+            {
+                Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
+
+            }
+
+            Console.WriteLine("Ange applikationsnummer för att ändra ansökan:");
+            int index = int.Parse(Console.ReadLine());
+            if (index >= 0 && index < Applications.Count)
+            {
+                Console.WriteLine("Ange ny status för ansökan:");
+                Console.WriteLine("1. Applied");
+                Console.WriteLine("2. Interview");
+                Console.WriteLine("3. Offer");
+                Console.WriteLine("4. Rejected");
+
+                //Switch statement uppdaterar status baserat på input
+                Applications[index].status = Console.ReadLine()
+                switch
+                {   
+                    "1" => JobbApplication.ApplicationStatus.Applied,
+                    "2" => JobbApplication.ApplicationStatus.Interview,
+                    "3" => JobbApplication.ApplicationStatus.Offer,
+                    "4" => JobbApplication.ApplicationStatus.Rejected,
+                    _ => Applications[index].status// om det är fel input ha kvar status
+                };
+
+                Applications[index].ResponseDate = DateTime.Now;
+            }
+            
+            
+            
         }
         //Visar alla ansökningar
         public void ShowAll()
@@ -44,29 +85,36 @@ namespace Inlamningsuppgift1.Classes
             { Console.WriteLine("Det finns inga ansökningar"); }
 
         }
-        ////Filtrerar med LINQ efter status(VG del)
-        //public void ShowByStatus(JobbApplication.ApplicationStatus status)
-        //{
-        //    var filteredApplications = Applications.Where(a => a.ApplicationStatus == status);
-        //    foreach (var application in filteredApplications)
-        //    {
-        //        Console.WriteLine(application.GetSummary());
-        //    }
-        //}
-        //// Visar statistik med LINQ(Count, Average, OrderBy, Where) (VG del)
-        //public void ShowStatistics()
-        //{
-        //    var totalApplications = Applications.Count;
-        //    var averageSalaryExpectation = Applications.Average(a => a.SalaryExpectation);
-        //    var applicationsByStatus = Applications.GroupBy(a => a.ApplicationStatus)
-        //                                           .Select(g => new { Status = g.Key, Count = g.Count() })
-        //                                           .OrderBy(g => g.Status);
-        //    Console.WriteLine($"Total Applications: {totalApplications}");
-        //    Console.WriteLine($"Average Salary Expectation: {averageSalaryExpectation}");
-        //    foreach (var statusGroup in applicationsByStatus)
-        //    {
-        //        Console.WriteLine($"Status: {statusGroup.Status}, Count: {statusGroup.Count}");
-        //    }
-        //}
+        //Filtrerar med LINQ efter status(VG del)
+        public void ShowByStatus(JobbApplication.ApplicationStatus status)
+        {
+            var filteredApplications = Applications.Where(a => a.status == status);    
+            foreach (var application in filteredApplications)
+            {
+                Console.WriteLine(application.GetSummary());
+            }
+        }
+        // Visar statistik med LINQ(Count, Average, OrderBy, Where) (VG del)
+        public void ShowStatistics()
+        {
+            var totalApplications = Applications.Count;
+            var averageSalaryExpectation = Applications.Average(app => app.SalaryExpectation);
+            var applicationsByStatus = Applications.GroupBy(app => app.status)
+            .Select(group => new { Status = group.Key, Count = group.Count() })
+            .OrderBy(group => group.Status);
+
+            var averageResponseTime = Applications
+            .Where(a => a.ResponseDate != null)
+            .Average(a => (a.ResponseDate - a.ApplicationDate)?.TotalDays);
+
+            Console.WriteLine($"Total Applications: {totalApplications}");
+            Console.WriteLine($"Average Salary Expectation: {averageSalaryExpectation}");
+            Console.WriteLine($"Average Response Time: {averageResponseTime}");
+
+            foreach (var statusGroup in applicationsByStatus)
+            {
+                Console.WriteLine($"Status: {statusGroup.Status}, Count: {statusGroup.Count}");
+            }
+        }
     }
 }
