@@ -45,12 +45,11 @@ namespace Inlamningsuppgift1
                 Console.WriteLine("2. Visa alla ansökningar");
                 Console.WriteLine("3. Filtrera ansökningar efter status");
                 Console.WriteLine("4. Sortera ansökningar efter datum");
-                Console.WriteLine("5. Totalt antal ansökningar");
-                Console.WriteLine("6. Antal per status");
-                Console.WriteLine("7. Genomsnittlig svarstid");
-                Console.WriteLine("8.Uppdatera status på en ansökan ");
-                Console.WriteLine("9.Ta bort en ansökan ");
-                Console.WriteLine("0. Avsluta programmet ");
+                Console.WriteLine("5. Visa statistik");
+                Console.WriteLine("6. Uppdatera status på en ansökan");
+                Console.WriteLine("7. Ta bort en ansökan");
+                Console.WriteLine("8.Avsluta ");
+ 
 
 
                 // Läs användar input och välj från switch case
@@ -73,21 +72,27 @@ namespace Inlamningsuppgift1
                         break;
 
                     case "5":
-                        Console.WriteLine("Totalt antal ansökningar - ej implementerat");
+                        Console.WriteLine("Statistik - ej implementerat");
+                        
                         break;
                     case "6":
-                        Console.WriteLine("Antal per status - ej implementerat");
-                        break;
-                    case "7":
-                        Console.WriteLine("Genomsnittlig svarstid - ej implementerat");
-                        break;
-                    case "8":
                         Console.WriteLine("Uppdatera status på en ansökan - ej implementerat");
                         break;
-                    case "9":
+                    case "7":
                         Console.WriteLine("Ta bort en ansökan - ej implementerat");
-                        break;
-                    case "0":
+                        if (ManagerObject.Applications.Count > 0)
+                        {
+
+                            Console.WriteLine("");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Det finns inga ansökningar att ta bort.");
+                            break;
+                        }
+                        
+                    case "8":
                         Console.WriteLine("Avslutar...");
                         return;
                     default:

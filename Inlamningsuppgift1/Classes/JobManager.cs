@@ -9,7 +9,7 @@ namespace Inlamningsuppgift1.Classes
         
 
         // Applications | List<JobApplication> - Samling av alla ansökningar
-        List<JobbApplication> Applications { get; set; } = new List<JobbApplication>();
+        public List<JobbApplication> Applications { get; set; } = new List<JobbApplication>();
 
         //METODER
         //Lägger till en ny ansökan
