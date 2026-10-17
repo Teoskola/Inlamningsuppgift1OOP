@@ -1,15 +1,151 @@
-﻿namespace Inlamningsuppgift1
+﻿using Inlamningsuppgift1.Classes;
+using System;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace Inlamningsuppgift1
 {
     public class Program
     {
-        public void Main(string[] args)
-        {
+        static void Main(string[] args)
+       {
+
+            //MALL FÖR MENY
+
+            //            Meny(krav) while loop med en switch case
+
+
+            //Programmet ska innehålla minst följande alternativ:
+            //Lägg till ny ansökan
+            //Visa alla ansökningar
+            //Filtrera ansökningar efter status(LINQ) (VG del)
+            //Sortera ansökningar efter datum(OrderBy) (VG del)
+            //Visa statistik:
+            //Totalt antal ansökningar
+            //Antal per status(VG del)
+            //Genomsnittlig svarstid(VG del)
+            // Uppdatera status på en ansökan
+            // Ta bort en ansökan
+            // Avsluta programmet
 
 
 
+            //Gör två nya objekt från klasserna
+            
+
+            JobManager ManagerObject = new JobManager();
 
 
             
-        }
+
+            //En meny med switchcase i en while loop där du hanterar ansökningarna
+            while (true)
+            {
+                Console.WriteLine("-----------------------------------------");
+                Console.WriteLine("Jobbansökningshanteraren!");
+                Console.WriteLine("Välj ett av följande alternativ:");
+                Console.WriteLine("1. Lägg till ny ansökan"); //klar
+                Console.WriteLine("2. Visa alla ansökningar"); //klar
+                Console.WriteLine("3. Filtrera ansökningar efter status");//klar
+                Console.WriteLine("4. Sortera ansökningar efter datum");//klar
+                Console.WriteLine("5. Visa statistik"); //klar
+                Console.WriteLine("6. Uppdatera status på en ansökan");//klar
+                Console.WriteLine("7. Ta bort en ansökan"); //klar
+                Console.WriteLine("8.Avsluta "); //klar
+ 
+
+
+                // Läs användar input och välj från switch case
+                string val = Console.ReadLine();
+                switch (val)
+                {
+                    case "1":
+                        Console.WriteLine("Lägg till ny ansökan");
+                        JobbApplication ApplicationObject = new JobbApplication();
+                        ManagerObject.AddJob(ApplicationObject);
+                        break;
+                    case "2":
+                        Console.WriteLine("Visa alla ansökningar");
+                        ManagerObject.ShowAll();
+                        break; 
+                    case "3":
+                        Console.WriteLine("Filtrera ansökningar efter status interviewed");  
+                        var interviews = ManagerObject.Applications.Where(a => a.status == JobbApplication.ApplicationStatus.Interview);
+                        Console.WriteLine("Ansökningar med status 'Interview':");
+                        foreach (var application in interviews)
+                        {
+                            Console.WriteLine(application.GetSummary());
+                        }
+                        break;
+                    case "4":
+                        Console.WriteLine("Sortera ansökningar efter datum - ");
+                        var ordered = ManagerObject.Applications.OrderBy(a => a.ApplicationDate);
+                        Console.WriteLine("Ansökningar sorterade efter datum:");
+                        foreach (var application in ordered)
+                        {
+                            Console.WriteLine(application.GetSummary());
+                        }
+                        break;
+
+                    case "5":
+                        Console.WriteLine("Statistik");
+                        ManagerObject.ShowStatistics();
+
+                        break;
+                    case "6":
+                        Console.WriteLine("Uppdatera status på en ansökan");
+
+                        ManagerObject.UpdateStatus();
+                         
+                        break;
+                    case "7":
+                        Console.WriteLine("Ta bort en ansökan");
+                        if (ManagerObject.Applications.Count > 0)
+                        {
+                            int count = 0; 
+                            foreach (var application in ManagerObject.Applications)
+                            {
+                                Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
+                                
+                            }
+
+                            Console.WriteLine("Ange applikationsnummer för att ta bort ansökan:");
+                            int index = int.Parse(Console.ReadLine());
+                            if (index >= 0 && index < ManagerObject.Applications.Count)
+                            {
+                                ManagerObject.Applications.RemoveAt(index);
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Ogiltigt applikationsnummer.");
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Det finns inga ansökningar att ta bort.");
+                            break;
+                        }
+                        
+                    case "8":
+                        Console.WriteLine("Avslutar...");
+                        return;
+                    default:
+                        Console.WriteLine("Ogiltigt val.");
+                        break;
+                }
+
+            }
+         }
+
+
+                    
+
+        
     }
 }
