@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -70,9 +71,12 @@ namespace Inlamningsuppgift1.Classes
 
                 Applications[index].ResponseDate = DateTime.Now;
             }
-            
-            
-            
+            else
+            {
+                Console.WriteLine("Ogiltigt applikationsnummer.");
+            }
+
+
         }
         //Visar alla ansökningar
         public void ShowAll()
