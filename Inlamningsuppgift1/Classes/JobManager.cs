@@ -25,7 +25,7 @@ namespace Inlamningsuppgift1.Classes
             application.PositionTitle = Console.ReadLine();
             application.ApplicationDate = DateTime.Now;
             Console.WriteLine("Hur mycket lön förväntar du dig skriv en siffra:");
-            application.SalaryExpectation = int.Parse(Console.ReadLine());
+            application.SalaryExpectation = int.TryParse(Console.ReadLine(), out int salary) ? salary : 0;
             Console.WriteLine($"Din ansökan har tagits emot.");
             //Lägger till ansökan i listan
             Applications.Add(application);
@@ -48,7 +48,7 @@ namespace Inlamningsuppgift1.Classes
             }
             //Ber användaren att ange applikationsnummer för att ändra status på en ansökan
             Console.WriteLine("Ange applikationsnummer för att ändra ansökan:");
-            int index = int.Parse(Console.ReadLine());
+            int index = int.TryParse(Console.ReadLine(), out int selectedIndex) ? selectedIndex : -1;
             //Om index är giltigt uppdateras status på ansökan
             if (index >= 0 && index < Applications.Count)
             {
@@ -152,7 +152,7 @@ namespace Inlamningsuppgift1.Classes
                 }
 
                 Console.WriteLine("Ange applikationsnummer för att ta bort ansökan:");
-                int index = int.Parse(Console.ReadLine());
+                int index = int.TryParse(Console.ReadLine(), out int selectedIndex) ? selectedIndex : -1;
                 if (index >= 0 && index < Applications.Count)
                 {
                     Applications.RemoveAt(index);
