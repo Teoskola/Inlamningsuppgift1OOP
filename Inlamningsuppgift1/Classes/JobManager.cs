@@ -80,7 +80,7 @@ namespace Inlamningsuppgift1.Classes
             if (Applications.Count > 0)
                 foreach (var application in Applications)
                 {
-                    Console.WriteLine(application.GetSummary());
+                    Helper.PrintApplication(application);
                 }
             else
             { Console.WriteLine("Det finns inga ansökningar"); }
@@ -121,7 +121,49 @@ namespace Inlamningsuppgift1.Classes
             var filteredApplications = Applications.Where(a => a.status == SelectedStatus);
             foreach (var application in filteredApplications)
             {
-                Console.WriteLine(application.GetSummary());
+                Helper.PrintApplication(application);
+            }
+        }
+
+        public void SortApplicationsByDate()
+        {
+            // Sorterar ansökningarna efter datum med OrderBy och skriver ut dem
+            var ordered = Applications.OrderBy(a => a.ApplicationDate);
+            Console.WriteLine("Ansökningar sorterade efter datum:");
+            foreach (var application in ordered)
+            {
+                Helper.PrintApplication(application);
+            }
+        }
+
+        public void RemoveApplication()
+        {
+            if (Applications.Count > 0)
+            {
+                int count = 0;
+                foreach (var application in Applications)
+                {
+                    Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
+
+                }
+
+                Console.WriteLine("Ange applikationsnummer för att ta bort ansökan:");
+                int index = int.Parse(Console.ReadLine());
+                if (index >= 0 && index < Applications.Count)
+                {
+                    Applications.RemoveAt(index);
+
+                }
+                else
+                {
+                    Console.WriteLine("Ogiltigt applikationsnummer.");
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine("Det finns inga ansökningar att ta bort.");
+               
             }
         }
         // Visar statistik antal applikationer och genomsnittlig löneförväntning samt genomsnittlig svarstid
