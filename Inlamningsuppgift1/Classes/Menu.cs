@@ -11,6 +11,7 @@ namespace Inlamningsuppgift1.Classes
 
 
 
+
             //MALL FÖR MENY
 
             //            Meny(krav) while loop med en switch case
@@ -78,12 +79,7 @@ namespace Inlamningsuppgift1.Classes
                     case "4":
                         Console.WriteLine("Sortera ansökningar efter datum  ");
                         // Sorterar ansökningarna efter datum med OrderBy och skriver ut dem
-                        var ordered = ManagerObject.Applications.OrderBy(a => a.ApplicationDate);
-                        Console.WriteLine("Ansökningar sorterade efter datum:");
-                        foreach (var application in ordered)
-                        {
-                            Console.WriteLine(application.GetSummary());
-                        }
+                        ManagerObject.SortApplicationsByDate();
                         break;
 
                     case "5":
@@ -99,33 +95,9 @@ namespace Inlamningsuppgift1.Classes
                         break;
                     case "7":
                         Console.WriteLine("Ta bort en ansökan");
-                        if (ManagerObject.Applications.Count > 0)
-                        {
-                            int count = 0;
-                            foreach (var application in ManagerObject.Applications)
-                            {
-                                Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
+                        ManagerObject.RemoveApplication();
+                        break;
 
-                            }
-
-                            Console.WriteLine("Ange applikationsnummer för att ta bort ansökan:");
-                            int index = int.Parse(Console.ReadLine());
-                            if (index >= 0 && index < ManagerObject.Applications.Count)
-                            {
-                                ManagerObject.Applications.RemoveAt(index);
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("Ogiltigt applikationsnummer.");
-                            }
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Det finns inga ansökningar att ta bort.");
-                            break;
-                        }
 
                     case "8":
                         Console.WriteLine("Avslutar...");
@@ -136,6 +108,9 @@ namespace Inlamningsuppgift1.Classes
                 }
 
             }
+        }
+
+    }
 
 
 
@@ -144,5 +119,5 @@ namespace Inlamningsuppgift1.Classes
 
 
 
-    }
-}
+    
+
