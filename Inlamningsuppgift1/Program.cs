@@ -34,9 +34,9 @@ namespace Inlamningsuppgift1
 
 
 
-            //Gör två nya objekt från klasserna
-            
 
+
+            //Skapa en instans av JobManager-klassen
             JobManager ManagerObject = new JobManager();
 
 
@@ -63,8 +63,9 @@ namespace Inlamningsuppgift1
                 string val = Console.ReadLine();
                 switch (val)
                 {
-                    case "1":
+                    case "1"://
                         Console.WriteLine("Lägg till ny ansökan");
+                        // Skapa en ny instans av JobbApplication och lägg till den i listan
                         JobbApplication ApplicationObject = new JobbApplication();
                         ManagerObject.AddJob(ApplicationObject);
                         break;
@@ -73,16 +74,13 @@ namespace Inlamningsuppgift1
                         ManagerObject.ShowAll();
                         break; 
                     case "3":
-                        Console.WriteLine("Filtrera ansökningar efter status interviewed");  
-                        var interviews = ManagerObject.Applications.Where(a => a.status == JobbApplication.ApplicationStatus.Interview);
-                        Console.WriteLine("Ansökningar med status 'Interview':");
-                        foreach (var application in interviews)
-                        {
-                            Console.WriteLine(application.GetSummary());
-                        }
+                        Console.WriteLine("Filtrera ansökningar efter status");
+                        
+                        ManagerObject.ShowByStatus();
                         break;
                     case "4":
-                        Console.WriteLine("Sortera ansökningar efter datum - ");
+                        Console.WriteLine("Sortera ansökningar efter datum  ");
+                        // Sorterar ansökningarna efter datum med OrderBy och skriver ut dem
                         var ordered = ManagerObject.Applications.OrderBy(a => a.ApplicationDate);
                         Console.WriteLine("Ansökningar sorterade efter datum:");
                         foreach (var application in ordered)
