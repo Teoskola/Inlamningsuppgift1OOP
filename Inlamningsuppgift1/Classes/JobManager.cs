@@ -85,7 +85,7 @@ namespace Inlamningsuppgift1.Classes
             { Console.WriteLine("Det finns inga ansökningar"); }
 
         }
-        //Filtrerar med LINQ efter status(VG del)
+        //Filtrerar med LINQ efter status
         public void ShowByStatus(JobbApplication.ApplicationStatus status)
         {
             var filteredApplications = Applications.Where(a => a.status == status);    
@@ -94,22 +94,27 @@ namespace Inlamningsuppgift1.Classes
                 Console.WriteLine(application.GetSummary());
             }
         }
-        // Visar statistik med LINQ(Count, Average, OrderBy, Where) (VG del)
+        // Visar statistik antal applikationer och genomsnittlig löneförväntning samt genomsnittlig svarstid
         public void ShowStatistics()
-        {
+        {   
             var totalApplications = Applications.Count;
-            var averageSalaryExpectation = Applications.Average(app => app.SalaryExpectation);
+            
+            var averageSalaryExpectation = Applications.Average(app => app.SalaryExpectation); //
             var applicationsByStatus = Applications.GroupBy(app => app.status)
             .Select(group => new { Status = group.Key, Count = group.Count() })
             .OrderBy(group => group.Status);
 
+            //räknar ut genomsnittlig svarstid i dagar
             var averageResponseTime = Applications
             .Where(a => a.ResponseDate != null)
             .Average(a => (a.ResponseDate - a.ApplicationDate)?.TotalDays);
+            //tar totaldays och konverterar till TimeSpan
+            TimeSpan averageResponseTimeSpan = TimeSpan.FromDays(averageResponseTime ?? 0);
 
-            Console.WriteLine($"Total Applications: {totalApplications}");
-            Console.WriteLine($"Average Salary Expectation: {averageSalaryExpectation}");
-            Console.WriteLine($"Average Response Time: {averageResponseTime}");
+            //Skriver ut statistiken
+            Console.WriteLine($"Totala ansökningar: {totalApplications}");
+            Console.WriteLine($"Genomsnittlig löneförväntan: {averageSalaryExpectation}");
+            Console.WriteLine($"Genomsnittlig svarstid: {averageResponseTimeSpan.Days} dagar och {averageResponseTimeSpan.Hours} timmar.");
 
             foreach (var statusGroup in applicationsByStatus)
             {
