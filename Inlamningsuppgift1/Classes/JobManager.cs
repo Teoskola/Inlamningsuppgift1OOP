@@ -188,6 +188,7 @@ namespace Inlamningsuppgift1.Classes
             Console.WriteLine($"Totala ansökningar: {totalApplications}");
             Console.WriteLine($"Genomsnittlig löneförväntan: {averageSalaryExpectation}");
             Console.WriteLine($"Genomsnittlig svarstid: {averageResponseTimeSpan.Days} dagar och {averageResponseTimeSpan.Hours} timmar.");
+            
             //Skriver ut antal ansökningar per status
             foreach (var statusGroup in applicationsByStatus)
             {
