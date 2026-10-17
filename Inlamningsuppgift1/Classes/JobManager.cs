@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -24,7 +25,7 @@ namespace Inlamningsuppgift1.Classes
             application.PositionTitle = Console.ReadLine();
             application.ApplicationDate = DateTime.Now;
             Console.WriteLine("Hur mycket lön förväntar du dig skriv en siffra:");
-            application.SalaryExpectation = int.Parse(Console.ReadLine());
+            application.SalaryExpectation = int.TryParse(Console.ReadLine(), out int salary) ? salary : 0;
             Console.WriteLine($"Din ansökan har tagits emot.");
             //Lägger till ansökan i listan
             Applications.Add(application);
@@ -47,7 +48,7 @@ namespace Inlamningsuppgift1.Classes
             }
             //Ber användaren att ange applikationsnummer för att ändra status på en ansökan
             Console.WriteLine("Ange applikationsnummer för att ändra ansökan:");
-            int index = int.Parse(Console.ReadLine());
+            int index = int.TryParse(Console.ReadLine(), out int selectedIndex) ? selectedIndex : -1;
             //Om index är giltigt uppdateras status på ansökan
             if (index >= 0 && index < Applications.Count)
             {
@@ -70,9 +71,12 @@ namespace Inlamningsuppgift1.Classes
 
                 Applications[index].ResponseDate = DateTime.Now;
             }
-            
-            
-            
+            else
+            {
+                Console.WriteLine("Ogiltigt applikationsnummer.");
+            }
+
+
         }
         //Visar alla ansökningar
         public void ShowAll()
@@ -89,6 +93,11 @@ namespace Inlamningsuppgift1.Classes
         //Filtrerar efter status
         public void ShowByStatus()
         {
+            if (Applications.Count == 0)
+            {
+                Console.WriteLine("Det finns inga ansökningar att filtrera.");
+                return;
+            }
             //Väljer status att filtrera efter och visar alla ansökningar med den statusen
             Console.WriteLine("Välj status att filtrera efter:");
             Console.WriteLine("1. Applied");
@@ -148,7 +157,7 @@ namespace Inlamningsuppgift1.Classes
                 }
 
                 Console.WriteLine("Ange applikationsnummer för att ta bort ansökan:");
-                int index = int.Parse(Console.ReadLine());
+                int index = int.TryParse(Console.ReadLine(), out int selectedIndex) ? selectedIndex : -1;
                 if (index >= 0 && index < Applications.Count)
                 {
                     Applications.RemoveAt(index);
@@ -168,7 +177,16 @@ namespace Inlamningsuppgift1.Classes
         }
         // Visar statistik antal applikationer och genomsnittlig löneförväntning samt genomsnittlig svarstid
         public void ShowStatistics()
-        {   //räknar ut total antal ansökningar
+           
+        {
+            //Om det inte finns några ansökningar skrivs ett meddelande ut och metoden avslutas
+            if (Applications.Count == 0)
+            {
+                Console.WriteLine("Det finns inga ansökningar att visa statistik för.");
+                return;
+            }
+
+            //räknar ut total antal ansökningar
             var totalApplications = Applications.Count;
             //räknar ut genomsnittlig löneförväntan
             var averageSalaryExpectation = Applications.Average(app => app.SalaryExpectation);
