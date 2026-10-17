@@ -61,15 +61,18 @@ namespace Inlamningsuppgift1.Classes
                 //Switch statement uppdaterar status baserat på input
                 Applications[index].status = Console.ReadLine()
                 switch
-                {   
+                {
                     "1" => JobbApplication.ApplicationStatus.Applied,
                     "2" => JobbApplication.ApplicationStatus.Interview,
                     "3" => JobbApplication.ApplicationStatus.Offer,
                     "4" => JobbApplication.ApplicationStatus.Rejected,
-                    _ => Applications[index].status// om det är fel input ha kvar status
+                    _ => Applications[index].status // om det är fel input ha kvar status
                 };
-
-                Applications[index].ResponseDate = DateTime.Now;
+                if (!Applications[index].ResponseDate.HasValue && Applications[index].status != JobbApplication.ApplicationStatus.Applied)
+                {
+                    Applications[index].ResponseDate = DateTime.Now;
+                }
+                
             }
             else
             {
@@ -196,6 +199,7 @@ namespace Inlamningsuppgift1.Classes
             .OrderBy(group => group.Status); //sorterar efter status i alfabetisk ordning
 
             //räknar ut genomsnittlig svarstid i dagar
+            
             var averageResponseTime = Applications
             .Where(a => a.ResponseDate != null)
             .Average(a => (a.ResponseDate - a.ApplicationDate)?.TotalDays);
