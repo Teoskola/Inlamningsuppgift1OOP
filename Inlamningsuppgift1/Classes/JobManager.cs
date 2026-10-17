@@ -168,7 +168,16 @@ namespace Inlamningsuppgift1.Classes
         }
         // Visar statistik antal applikationer och genomsnittlig löneförväntning samt genomsnittlig svarstid
         public void ShowStatistics()
-        {   //räknar ut total antal ansökningar
+           
+        {
+            //Om det inte finns några ansökningar skrivs ett meddelande ut och metoden avslutas
+            if (Applications.Count == 0)
+            {
+                Console.WriteLine("Det finns inga ansökningar att visa statistik för.");
+                return;
+            }
+
+            //räknar ut total antal ansökningar
             var totalApplications = Applications.Count;
             //räknar ut genomsnittlig löneförväntan
             var averageSalaryExpectation = Applications.Average(app => app.SalaryExpectation);
