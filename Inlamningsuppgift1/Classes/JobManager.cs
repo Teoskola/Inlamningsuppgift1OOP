@@ -93,6 +93,11 @@ namespace Inlamningsuppgift1.Classes
         //Filtrerar efter status
         public void ShowByStatus()
         {
+            if (Applications.Count == 0)
+            {
+                Console.WriteLine("Det finns inga ansökningar att filtrera.");
+                return;
+            }
             //Väljer status att filtrera efter och visar alla ansökningar med den statusen
             Console.WriteLine("Välj status att filtrera efter:");
             Console.WriteLine("1. Applied");
