@@ -66,7 +66,7 @@ namespace Inlamningsuppgift1.Classes
                     case "1"://
                         Console.WriteLine("Lägg till ny ansökan");
                         // Skapa en ny instans av JobbApplication och lägg till den i listan
-                        JobbApplication ApplicationObject = new JobbApplication();
+                        JobApplication ApplicationObject = new JobApplication();
                         ManagerObject.AddJob(ApplicationObject);
                         break;
                     case "2":

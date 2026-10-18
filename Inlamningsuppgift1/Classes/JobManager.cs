@@ -12,13 +12,13 @@ namespace Inlamningsuppgift1.Classes
         
 
         // Applications | List<JobApplication> - Samling av alla ansökningar
-        public List<JobbApplication> Applications { get; set; } = new List<JobbApplication>();
+        public List<JobApplication> Applications { get; set; } = new List<JobApplication>();
         
         
 
         //METODER
         //Lägger till en ny ansökan
-        public void AddJob(JobbApplication application)
+        public void AddJob(JobApplication application)
         {//Ber användaren att ange information om ansökan
             Console.WriteLine("Till vilket företag ansöker du?");
             application.CompanyName = Console.ReadLine();
@@ -49,7 +49,7 @@ namespace Inlamningsuppgift1.Classes
             int count = 0; //räknar ut applikationsnummer för att kunna välja vilken ansökan man vill ändra
             foreach (var application in Applications)
             {
-                Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
+                Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.Status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
 
             }
             //Ber användaren att ange applikationsnummer för att ändra status på en ansökan
@@ -65,16 +65,16 @@ namespace Inlamningsuppgift1.Classes
                 Console.WriteLine("4. Rejected");
 
                 //Switch statement uppdaterar status baserat på input
-                Applications[index].status = Console.ReadLine()
+                Applications[index].Status = Console.ReadLine()
                 switch
                 {
-                    "1" => JobbApplication.ApplicationStatus.Applied,
-                    "2" => JobbApplication.ApplicationStatus.Interview,
-                    "3" => JobbApplication.ApplicationStatus.Offer,
-                    "4" => JobbApplication.ApplicationStatus.Rejected,
-                    _ => Applications[index].status // om det är fel input ha kvar status
+                    "1" => JobApplication.ApplicationStatus.Applied,
+                    "2" => JobApplication.ApplicationStatus.Interview,
+                    "3" => JobApplication.ApplicationStatus.Offer,
+                    "4" => JobApplication.ApplicationStatus.Rejected,
+                    _ => Applications[index].Status // om det är fel input ha kvar status
                 };
-                if (!Applications[index].ResponseDate.HasValue && Applications[index].status != JobbApplication.ApplicationStatus.Applied)
+                if (!Applications[index].ResponseDate.HasValue && Applications[index].Status != JobApplication.ApplicationStatus.Applied)
                 {
                     Applications[index].ResponseDate = DateTime.Now;
                 }
@@ -113,30 +113,30 @@ namespace Inlamningsuppgift1.Classes
             Console.WriteLine("2. Interview");
             Console.WriteLine("3. Offer");
             Console.WriteLine("4. Rejected");
-            JobbApplication.ApplicationStatus SelectedStatus;
+            JobApplication.ApplicationStatus SelectedStatus;
 
             //Switch statement för att välja status baserat på input
             string input = Console.ReadLine();
             switch(input)
             {
                 case "1":
-                    SelectedStatus = JobbApplication.ApplicationStatus.Applied;
+                    SelectedStatus = JobApplication.ApplicationStatus.Applied;
                     break;
                 case "2":
-                    SelectedStatus = JobbApplication.ApplicationStatus.Interview;
+                    SelectedStatus = JobApplication.ApplicationStatus.Interview;
                     break;
                 case "3":
-                    SelectedStatus = JobbApplication.ApplicationStatus.Offer;
+                    SelectedStatus = JobApplication.ApplicationStatus.Offer;
                     break;
                 case "4":
-                    SelectedStatus = JobbApplication.ApplicationStatus.Rejected;
+                    SelectedStatus = JobApplication.ApplicationStatus.Rejected;
                     break;
                 default:
                     Console.WriteLine("Felaktig input.");
                     return;
 
             }//Filtrerar ansökningar baserat på vald status och skriver ut dem
-            var filteredApplications = Applications.Where(a => a.status == SelectedStatus);
+            var filteredApplications = Applications.Where(a => a.Status == SelectedStatus);
             foreach (var application in filteredApplications)
             {
                 Helper.PrintApplication(application);
@@ -161,7 +161,7 @@ namespace Inlamningsuppgift1.Classes
                 int count = 0;
                 foreach (var application in Applications)
                 {
-                    Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
+                    Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.Status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
 
                 }
                 //Ber användaren att ange applikationsnummer för att ta bort ansökan
@@ -200,7 +200,7 @@ namespace Inlamningsuppgift1.Classes
             //räknar ut genomsnittlig löneförväntan
             var averageSalaryExpectation = Applications.Average(app => app.SalaryExpectation);
             //räknar ut antal ansökningar per status
-            var applicationsByStatus = Applications.GroupBy(app => app.status)
+            var applicationsByStatus = Applications.GroupBy(app => app.Status)
             .Select(group => new { Status = group.Key, Count = group.Count() })//selecterar key och count för att kunna skriva ut
             .OrderBy(group => group.Status); //sorterar efter status i alfabetisk ordning
 

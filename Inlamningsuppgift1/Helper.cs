@@ -9,22 +9,22 @@ namespace Inlamningsuppgift1
     public static class Helper
     {
         // Ändrar färgen på texten i konsolen beroende på status och skriver ut en sammanfattning av ansökan
-        public static void PrintApplication(JobbApplication application)
+        public static void PrintApplication(JobApplication application)
         {
             // 1. Välj färg beroende på status
-           if (application.status == JobbApplication.ApplicationStatus.Applied)
+           if (application.Status == JobApplication.ApplicationStatus.Applied)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
-            else if (application.status == JobbApplication.ApplicationStatus.Interview)
+            else if (application.Status == JobApplication.ApplicationStatus.Interview)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
             }
-            else if (application.status == JobbApplication.ApplicationStatus.Offer)
+            else if (application.Status == JobApplication.ApplicationStatus.Offer)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
             }
-            else if (application.status == JobbApplication.ApplicationStatus.Rejected)
+            else if (application.Status == JobApplication.ApplicationStatus.Rejected)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
