@@ -126,7 +126,7 @@ namespace Inlamningsuppgift1.Classes
                     SelectedStatus = JobbApplication.ApplicationStatus.Rejected;
                     break;
                 default:
-                    Console.WriteLine("Felaktig input, visar alla ansökningar.");
+                    Console.WriteLine("Felaktig input.");
                     return;
 
             }//Filtrerar ansökningar baserat på vald status och skriver ut dem
@@ -151,14 +151,14 @@ namespace Inlamningsuppgift1.Classes
         public void RemoveApplication()
         {
             if (Applications.Count > 0)
-            {
+            {//Om det finns ansökningar skrivs de ut och användaren får välja vilken ansökan som ska tas bort
                 int count = 0;
                 foreach (var application in Applications)
                 {
                     Console.WriteLine($" Applikationsnummer: {count++}, Företag: {application.CompanyName}, Position: {application.PositionTitle}, Status: {application.status}, Ansökningsdatum: {application.ApplicationDate.ToShortDateString()}, Svarsdagen: {(application.ResponseDate.HasValue ? application.ResponseDate.Value.ToShortDateString() : "Ingen")}, Löneförväntning: {application.SalaryExpectation}");
 
                 }
-
+                //Ber användaren att ange applikationsnummer för att ta bort ansökan
                 Console.WriteLine("Ange applikationsnummer för att ta bort ansökan:");
                 int index = int.TryParse(Console.ReadLine(), out int selectedIndex) ? selectedIndex : -1;
                 if (index >= 0 && index < Applications.Count)
@@ -216,6 +216,47 @@ namespace Inlamningsuppgift1.Classes
             {
                 Console.WriteLine($"Status: {statusGroup.Status}, Count: {statusGroup.Count}");
             }
+
+
+       
         }
+
+
+        public void ShowUnansweredOlderThan14Days()
+        {
+            //om det inte finns några ansökningar skrivs ett meddelande ut och metoden avslutas
+            if (Applications.Count == 0)
+            {
+                Console.WriteLine("Det finns inga ansökningar att visa.");
+                
+            }
+            //Filtrerar ansökningar som är äldre än 14 dagar och inte har fått svar
+            var oldunansweredApplications = Applications.Where(a => a.GetDaysSinceApplied() > 14 && a.ResponseDate == null);
+            if (!oldunansweredApplications.Any())//Om det inte finns några ansökningar som matchar kriterierna skrivs ett meddelande ut
+            {
+                Console.WriteLine("Det finns inga ansökningar som är äldre än 14 dagar och inte har fått svar.");
+            }
+            if (oldunansweredApplications.Any())//Om det finns ansökningar som matchar kriterierna skrivs de ut
+            {
+                Console.WriteLine("Ansökningar som är äldre än 14 dagar och inte har fått svar:");
+                foreach (var application in oldunansweredApplications)
+                {
+                    Helper.PrintApplication(application);
+                }
+                return;
+            }
+            
+            
+
+
+
+            
+
+            // 2. Om inget matchar: skriv ett meddelande och avsluta med return
+            // 3. Annars: loopa och skriv ut varje ansökan med Helper.PrintApplication
+        }
+
     }
+
+
 }

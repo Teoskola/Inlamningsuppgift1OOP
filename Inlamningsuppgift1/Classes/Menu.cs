@@ -52,8 +52,9 @@ namespace Inlamningsuppgift1.Classes
                 Console.WriteLine("4. Sortera ansökningar efter datum");//klar
                 Console.WriteLine("5. Visa statistik"); //klar
                 Console.WriteLine("6. Uppdatera status på en ansökan");//klar
-                Console.WriteLine("7. Ta bort en ansökan"); //klar
-                Console.WriteLine("8.Avsluta "); //klar
+                Console.WriteLine("7. Ta bort en ansökan");
+                Console.WriteLine("8. Visa ansökningar utan svar äldre än 14 dagar");
+                Console.WriteLine("9. Avsluta "); //klar
 
 
 
@@ -98,8 +99,13 @@ namespace Inlamningsuppgift1.Classes
                         ManagerObject.RemoveApplication();
                         break;
 
-
                     case "8":
+                        Console.WriteLine("Visa ansökningar utan svar äldre än 14 dagar");
+                        ManagerObject.ShowUnansweredOlderThan14Days();
+                        break;
+
+
+                    case "9":
                         Console.WriteLine("Avslutar...");
                         return;
                     default:

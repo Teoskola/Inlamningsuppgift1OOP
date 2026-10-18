@@ -33,6 +33,7 @@ namespace Inlamningsuppgift1.Classes
         public int GetDaysSinceApplied()
         {
             return (DateTime.Now - ApplicationDate).Days;
+            
         }
         //Returnerar en kort sammanfattning av ansökan.
         public string GetSummary()
