@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Inlamningsuppgift1.Classes
 {
@@ -14,7 +15,7 @@ namespace Inlamningsuppgift1.Classes
 
             //MALL FÖR MENY
 
-            //            Meny(krav) while loop med en switch case
+            //Meny(krav) while loop med en switch case
 
 
             //Programmet ska innehålla minst följande alternativ:
@@ -52,8 +53,8 @@ namespace Inlamningsuppgift1.Classes
                 Console.WriteLine("4. Sortera ansökningar efter datum");//klar
                 Console.WriteLine("5. Visa statistik"); //klar
                 Console.WriteLine("6. Uppdatera status på en ansökan");//klar
-                Console.WriteLine("7. Ta bort en ansökan");
-                Console.WriteLine("8. Visa ansökningar utan svar äldre än 14 dagar");
+                Console.WriteLine("7. Ta bort en ansökan");//klar
+                Console.WriteLine("8. Visa ansökningar utan svar äldre än 14 dagar");//klar
                 Console.WriteLine("9. Avsluta "); //klar
 
 
@@ -100,7 +101,7 @@ namespace Inlamningsuppgift1.Classes
                         break;
 
                     case "8":
-                        Console.WriteLine("Visa ansökningar utan svar äldre än 14 dagar");
+                        Console.WriteLine("Ansökningar utan svar äldre än 14 dagar:");
                         ManagerObject.ShowUnansweredOlderThan14Days();
                         break;
 

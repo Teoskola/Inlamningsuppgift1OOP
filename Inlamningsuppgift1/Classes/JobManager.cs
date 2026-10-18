@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 namespace Inlamningsuppgift1.Classes
 {
@@ -209,8 +210,14 @@ namespace Inlamningsuppgift1.Classes
             //Skriver ut statistiken
             Console.WriteLine($"Totala ansökningar: {totalApplications}");
             Console.WriteLine($"Genomsnittlig löneförväntan: {averageSalaryExpectation}");
-            Console.WriteLine($"Genomsnittlig svarstid: {averageResponseTimeSpan.Days} dagar och {averageResponseTimeSpan.Hours} timmar.");
-            
+            if (averageResponseTime.HasValue)
+            {
+                Console.WriteLine($"Genomsnittlig svarstid: {averageResponseTimeSpan.Days} dagar och {averageResponseTimeSpan.Hours} timmar.");
+            }
+            else
+            {
+                Console.WriteLine("Ingen svarstid tillgänglig.");
+            }
             //Skriver ut antal ansökningar per status
             foreach (var statusGroup in applicationsByStatus)
             {
@@ -221,24 +228,25 @@ namespace Inlamningsuppgift1.Classes
        
         }
 
-
+        //visar applikationer som är äldre än 14 dagar och inte har fått svar
         public void ShowUnansweredOlderThan14Days()
         {
             //om det inte finns några ansökningar skrivs ett meddelande ut och metoden avslutas
             if (Applications.Count == 0)
             {
                 Console.WriteLine("Det finns inga ansökningar att visa.");
-                
+                return;
             }
             //Filtrerar ansökningar som är äldre än 14 dagar och inte har fått svar
             var oldunansweredApplications = Applications.Where(a => a.GetDaysSinceApplied() > 14 && a.ResponseDate == null);
             if (!oldunansweredApplications.Any())//Om det inte finns några ansökningar som matchar kriterierna skrivs ett meddelande ut
             {
                 Console.WriteLine("Det finns inga ansökningar som är äldre än 14 dagar och inte har fått svar.");
+                return;
             }
             if (oldunansweredApplications.Any())//Om det finns ansökningar som matchar kriterierna skrivs de ut
             {
-                Console.WriteLine("Ansökningar som är äldre än 14 dagar och inte har fått svar:");
+                Console.WriteLine("Ansökningar som är äldre än 14 dagar som inte har fått svar:");
                 foreach (var application in oldunansweredApplications)
                 {
                     Helper.PrintApplication(application);
@@ -252,8 +260,7 @@ namespace Inlamningsuppgift1.Classes
 
             
 
-            // 2. Om inget matchar: skriv ett meddelande och avsluta med return
-            // 3. Annars: loopa och skriv ut varje ansökan med Helper.PrintApplication
+            
         }
 
     }
