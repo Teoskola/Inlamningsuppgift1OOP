@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inlamningsuppgift1.Classes
 {
-    public  class JobbApplication
+    public  class JobApplication
     {
 
 
@@ -21,7 +21,7 @@ namespace Inlamningsuppgift1.Classes
             Offer,
             Rejected
         }
-        public ApplicationStatus status { get; set; }
+        public ApplicationStatus Status { get; set; }
         public DateTime ApplicationDate { get; set; }
         
         public DateTime? ResponseDate { get; set; }
@@ -33,11 +33,12 @@ namespace Inlamningsuppgift1.Classes
         public int GetDaysSinceApplied()
         {
             return (DateTime.Now - ApplicationDate).Days;
+            
         }
         //Returnerar en kort sammanfattning av ansökan.
         public string GetSummary()
         {
-            return $"Företag: {CompanyName}, Position: {PositionTitle}, Status: {status}, AnsökningsDatum: {ApplicationDate.ToShortDateString()}, Respons: {(ResponseDate.HasValue ? ResponseDate.Value.ToShortDateString() : "N/A")}, Förväntad lön: {SalaryExpectation}";
+            return $"Företag: {CompanyName}, Position: {PositionTitle}, Status: {Status}, AnsökningsDatum: {ApplicationDate.ToShortDateString()}, Respons: {(ResponseDate.HasValue ? ResponseDate.Value.ToShortDateString() : "N/A")}, Förväntad lön: {SalaryExpectation}";
         }
 
 

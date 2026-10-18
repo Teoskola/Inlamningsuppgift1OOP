@@ -6,6 +6,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 namespace Inlamningsuppgift1
 {

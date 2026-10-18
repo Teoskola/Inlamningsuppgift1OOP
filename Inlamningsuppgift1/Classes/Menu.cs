@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Inlamningsuppgift1.Classes
 {
@@ -14,7 +15,7 @@ namespace Inlamningsuppgift1.Classes
 
             //MALL FÖR MENY
 
-            //            Meny(krav) while loop med en switch case
+            //Meny(krav) while loop med en switch case
 
 
             //Programmet ska innehålla minst följande alternativ:
@@ -52,8 +53,9 @@ namespace Inlamningsuppgift1.Classes
                 Console.WriteLine("4. Sortera ansökningar efter datum");//klar
                 Console.WriteLine("5. Visa statistik"); //klar
                 Console.WriteLine("6. Uppdatera status på en ansökan");//klar
-                Console.WriteLine("7. Ta bort en ansökan"); //klar
-                Console.WriteLine("8.Avsluta "); //klar
+                Console.WriteLine("7. Ta bort en ansökan");//klar
+                Console.WriteLine("8. Visa ansökningar utan svar äldre än 14 dagar");//klar
+                Console.WriteLine("9. Avsluta "); //klar
 
 
 
@@ -64,7 +66,7 @@ namespace Inlamningsuppgift1.Classes
                     case "1"://
                         Console.WriteLine("Lägg till ny ansökan");
                         // Skapa en ny instans av JobbApplication och lägg till den i listan
-                        JobbApplication ApplicationObject = new JobbApplication();
+                        JobApplication ApplicationObject = new JobApplication();
                         ManagerObject.AddJob(ApplicationObject);
                         break;
                     case "2":
@@ -98,8 +100,13 @@ namespace Inlamningsuppgift1.Classes
                         ManagerObject.RemoveApplication();
                         break;
 
-
                     case "8":
+                        Console.WriteLine("Ansökningar utan svar äldre än 14 dagar:");
+                        ManagerObject.ShowUnansweredOlderThan14Days();
+                        break;
+
+
+                    case "9":
                         Console.WriteLine("Avslutar...");
                         return;
                     default:
