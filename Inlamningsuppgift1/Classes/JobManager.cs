@@ -27,9 +27,9 @@ namespace Inlamningsuppgift1.Classes
             application.ApplicationDate = DateTime.Now;
             Console.WriteLine("Hur mycket lön förväntar du dig skriv en siffra:");
             int Expectation;
-            while (!int.TryParse(Console.ReadLine(), out Expectation))
+            while (!int.TryParse(Console.ReadLine(), out Expectation) || Expectation < 0)
             {
-                Console.WriteLine("Ogiltig inmatning. Ange en siffra för löneförväntan:");
+                Console.WriteLine("Ogiltig inmatning. Ange en positiv siffra för löneförväntan:");
             }
             application.SalaryExpectation = Expectation;
             Console.WriteLine($"Din ansökan har tagits emot.");
